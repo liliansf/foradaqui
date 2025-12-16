@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>fora daqui ✨</title>
+
+  <style>
+    /* ====== fotolog antigo, mas legível ====== */
+    :root{
+      --bg: #f2f2f2;
+      --paper: #ffffff;
+      --ink: #222;
+      --soft: #666;
+      --line: #e7e7e7;
+      --accent: #ff4fd8;  /* pink blink */
+      --accent2: #7b61ff; /* roxinho */
+      --shadow: 0 8px 30px rgba(0,0,0,.08);
+    }
+
+    *{ box-sizing: border-box; }
+
+    html, body{
+      height: 100%;
+    }
+
+    body{
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Verdana, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* estreito, centrado, com cara de post */
+    .wrap{
+      width: min(640px, 92vw);
+      margin: 36px auto 60px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(255,79,216,.08), rgba(123,97,255,.08));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .badge{
+      font-size: 12px;
+      color: var(--soft);
+      white-space: nowrap;
+    }
+
+    .blink{
+      font-weight: bold;
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(255,79,216,.35);
+      animation: blink 1.25s step-end infinite;
+    }
+    @keyframes blink{
+      50%{ opacity: .35; }
+    }
+
+    .content{
+      padding: 22px 22px 10px;
+    }
+
+    h1{
+      margin: 8px 0 8px;
+      font-size: 26px;
+      letter-spacing: .4px;
+      font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+    }
+
+    .sub{
+      margin: 0 0 18px;
+      color: var(--soft);
+      font-size: 12px;
+    }
+
+    .intro{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border: 1px dashed rgba(0,0,0,.18);
+      background: rgba(0,0,0,.02);
+    }
+
+    hr{
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 22px 0;
+    }
+
+    .section{
+      margin: 18px 0 24px;
+    }
+
+    .section h2{
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing: .2px;
+      font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag{
+      font-size: 11px;
+      color: var(--soft);
+      border: 1px solid var(--line);
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.02);
+    }
+
+    .p{
+      margin: 0 0 12px;
+    }
+
+    /* imagens e gifs com cara de fotolog */
+    .media{
+      margin: 12px 0 10px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .photo{
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      background: #fafafa;
+    }
+
+    .gifrow{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: center; /* 👈 centraliza */
+
+    }
+
+    .gif{
+      height: 42px;
+      width: auto;
+      border: 0;
+      image-rendering: auto;
+      opacity: .95;
+    }
+ 
+
+.gif.gif-big{
+  height: 280px;   /* 👈 maior */
+}
+
+    .caption{
+      font-size: 12px;
+      color: var(--soft);
+      margin-top: -4px;
+    }
+
+    /* mini “comentários do fotolog”, só estética */
+    .footer{
+      padding: 14px 22px 22px;
+      border-top: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 12px;
+    }
+
+    .mini{
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(0,0,0,.15);
+    }
+
+    .mini .line{
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,79,216,.55);
+      margin-top: 6px;
+      flex: 0 0 auto;
+      box-shadow: 0 0 10px rgba(255,79,216,.25);
+    }
+
+    a{
+      color: inherit;
+      text-decoration: underline dotted rgba(0,0,0,.35);
+    }
+/* largura fixa do conteúdo */
+.wrap{
+  width: 640px;
+}
+
+/* laterais alinhadas ao conteúdo */
+.side{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 72px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+
+  pointer-events: none;
+}
+
+
+
+
+/* esquerda: centro da tela - metade do wrap - gap */
+.side.left{
+  left: calc(50% - 640px / 2 - 96px);
+}
+
+/* direita: centro da tela + metade do wrap + gap */
+.side.right{
+  left: calc(50% + 640px / 2 + 24px);
+}
+
+/* gifs */
+.side img{
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  opacity: .9;
+}
+
+.side img.big{
+  transform: scale(1.6);     /* 👈 aumenta visualmente */
+}
+
+
+/* mobile */
+@media (max-width: 900px){
+  .side{
+    display: none;
+  }
+}
+
+
+/* some no mobile */
+@media (max-width: 900px){
+  .side{
+    display: none;
+  }
+}
+
+    /* versão print/PDF (se você quiser salvar em PDF) */
+    @media print{
+      body{ background: #fff; }
+      .wrap{ box-shadow: none; border: none; width: 100%; margin: 0; }
+      .blink{ animation: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="layout">
+  <div class="side left">
+    <!-- gifs da esquerda -->
+    <img src="gaiathegraycat-sparkle.gif">
+    <img src="cattaiyakikorilakkuma.gif">
+    <img src="gatos-memes-gato-meme.gif">
+  </div>
+
+
+
+
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="badge">
+        <span class="blink">✨</span>
+        <span>fora daqui</span>
+      </div>
+      <div class="badge">edição: dezembro</div>
+    </div>
+
+    <div class="content">
+      <h1>fora daqui ✨</h1>
+      <p class="sub">um recorte rápido — com fotos e gifs</p>
+
+      <div class="intro">
+        <p class="p">
+          já que por aqui a gente troca muito mais texto, prazo e decisão do que contexto, e vocês disseram que não sabem muita coisa sobre mim, resolvi fazer uma apresentação de quem eu sou fora daqui 
+        </p>
+
+        <div class="gifrow" aria-label="gifs da intro">
+          <!-- TROQUE os src pelos seus gifs (arquivos locais ou links) -->
+          <img class="gif" src="pink-pastel-bunny-divider.gif" alt="gif decorativo">
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="section" id="internet">
+        <h2>internet, anonimato e estética <span class="tag">msn / orkut / html</span></h2>
+        <p class="p">
+          sou uma millenial que viveu a adolescência entrando na internet meia noite pra entrar no msn e orkut. sempre fiz amizades virtuais e nunca gostei de me expor, então criava fakes dos meus personagens preferidos (acho que por ter começado tão cedo a me perder pelo submundo da internet que aprendi bastante sobre computadores. aprendi html só pra deixar meu orkut aesthetic rs). 
+        </p> 
+
+        <div class="media">
+          <div class="gifrow">
+            <img class="gif gif-big" src="emo-taylor-swift.gif" alt="gif decorativo" class="gif big">
+          </div>
+          <div class="caption" align="center">comigo quem quiser contra mim quem puder</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="section" id="olhar">
+        <h2>o que eu gosto de olhar <span class="tag">foto / moda / arte</span></h2>
+        <p class="p">
+          eu costumo dizer que gosto de fotografia, mas o que eu gosto mesmo é de estética.
+desde lugares até moda, fotografia, e arte no geral; acho que por isso gosto de ser muito performática, seja montando looks esquisitos ou sendo temática em épocas do ano, tipo o natal. aliás eu amo o natal. 
+
+        </p>
+
+        <div class="media">
+          <img class="photo" src="WhatsApp Image 2025-12-15 at 20.48.23 (2).jpeg" alt="foto selecionada">
+  <img class="photo" src="WhatsApp Image 2025-12-15 at 20.48.22.jpeg" alt="foto selecionada">
+          
+ 
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="section" id="natal">
+        <h2>performance, tédio e tiktok <span class="tag">biscoite / pecinha</span></h2>
+        <p class="p">
+amo fazer receitas que vejo no tiktok, ainda mais se elas forem temáticas (esse final de semana fiz biscoitos, no ano passado aprendi a fazer panetone). 
+nas minhas férias do ano passado comecei um projeto de garimpo, foi divertido, mas preciso aprender a lidar com o tédio sem me encher de atividades aleatórias (nessa mesma linha de atividade nonsense, já criei uma conta no tiktok com relatos (rs) de caminhoneiros que hoje tem 62 mil seguidores).
+
+        </p>
+
+        <div class="media">
+          <img class="photo" src="WhatsApp Image 2025-12-15 at 20.48.23 (1).jpeg" alt="foto selecionada">
+           <img class="photo" src="WhatsApp Image 2025-12-15 at 20.50.37.jpeg" alt="foto selecionada">
+            <img class="photo" src="WhatsApp Image 2025-12-15 at 20.42.40.jpeg" alt="foto selecionada">
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="section" id="gatos">
+        <h2>gatos <span class="tag">4 gatos</span></h2>
+        <p class="p">
+          tenho quatro gatos: rita, ruth, josé e janjo. tudo começou na pandemia, com a rita, e virou um esquema de pirâmide que eu abracei sem resistência.
+          
+        </p>
+
+        <div class="media">
+          <img class="photo" src="WhatsApp Image 2025-12-15 at 21.13.52.jpeg" alt="foto selecionada">
+          <div class="gifrow">
+            <img class="gif" src="cat.gif" alt="gif decorativo">
+          </div>
+        </div>
+      </div>
+  <hr>
+
+      <div class="section" id="hobbies">
+        <h2>hobbies <span class="tag">terror e coisas más</span></h2>
+        <p class="p">
+          atualmente voltei a gostar de jogos, acabei de zerar o remake de resident evil 2 (eu joguei no facilitado, mas ninguém pode me julgar) e recomendo fortemente A.I.L.A, um jogo de terror baseado nos clássicos e desenvolvido no Brasil em uma campanha coletiva, a história do jogo foca em uma inteligencia artificial.
+          recentemente também consegui terminar de assistir todas as QUINZE temporadas de supernatural (eu sempre parava décima primeira), mas minha série do coração é House. 
+          ps.: acho importante contar também que li todos os livros de crepúsculo, até os que não foram lançados. 
+        </p>
+
+        <div class="media">
+          <img class="photo" src="WhatsApp Image 2025-12-15 at 20.42.39.jpeg" alt="foto selecionada">
+   
+          <div class="gifrow">
+            <img class="gif gif-big" src="c5002af1727064163f28c48b4f2ae8bb.gif" alt="gif decorativo" class="gif big">
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <hr>
+
+      <div class="section" id="receitas">
+        <h2>... <span class="tag">oi</span></h2>
+        <p class="p">
+fiz essa apresentação falando as coisas mais aleatórias, espero que vocês se sintam mais próximos de mim depois disso ✨ 
+        </p>
+
+
+      </div>
+
+    
+
+    <div class="footer">
+      <div class="mini" aria-label="rodapé estilo fotolog">
+        <div class="line"><span class="dot"></span><span>mood: <span class="blink">✨</span> nostálgico</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="side right">
+    <!-- gifs da direita (opcional) -->
+    <img src="gaiathegraycat-sparkle.gif">
+    <img src="cattaiyakikorilakkuma.gif">
+    <img src="gatos-memes-gato-meme.gif">
+  </div>
+</div>
+
+</body>
+</html>
